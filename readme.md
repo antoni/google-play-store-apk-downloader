@@ -1,12 +1,10 @@
-# Google Play
+## Build
 
-> I’m not really sure what the point of this video is, but I guess just be
-> generous. be kind to people, because you never know how much they might need
-> it, or how far it’ll go.
->
-> [NakeyJakey](//youtube.com/watch?v=Cr0UYNKmrUs) (2018)
-
-download APK from Google Play or send API requests
+```console
+   pushd internal/play
+   go build -o ../../build/google-play-apk-downloader
+   popd
+```
 
 ## tool examples
 
@@ -15,21 +13,21 @@ Account. then get authorization code (`oauth_token`) cookie from
 [browser&nbsp;storage][1]. should be valid for 10 minutes. then exchange
 authorization code for refresh token (`aas_et`):
 
-~~~
+```
 play -o oauth2_4/0Adeu5B...
-~~~
+```
 
-[1]://firefox-source-docs.mozilla.org/devtools-user/storage_inspector
+[1]: //firefox-source-docs.mozilla.org/devtools-user/storage_inspector
 
 create a file containing `X-DFE-Device-ID` (GSF ID) for future requests:
 
-~~~
+```
 play -d
-~~~
+```
 
 get app details:
 
-~~~
+```
 > play -i com.google.android.youtube
 details[6] = Google LLC
 details[8] = 0 USD
@@ -41,21 +39,21 @@ downloads = 16.09 billion
 name = YouTube
 size = 112.04 megabyte
 version code = 1545332160
-~~~
+```
 
 acquire app. only needs to be done once per Google account:
 
-~~~
+```
 play -i com.google.android.youtube -a
-~~~
+```
 
 download APK. you need to specify any valid version code. the latest code is
 provided by the previous details command. if APK is split, all pieces will be
 downloaded:
 
-~~~
+```
 play -i com.google.android.youtube -v 1540222400
-~~~
+```
 
 ## goals
 

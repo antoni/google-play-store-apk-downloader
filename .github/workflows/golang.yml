@@ -1,0 +1,36 @@
+name: Build
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    name: Build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.22.0"
+
+      - name: Fetch Git tags
+        shell: bash
+        run: git fetch --prune --unshallow --tags
+
+      # Runs commands using the runners shell
+      - name: Build
+        shell: bash
+        run: |
+          pushd internal/play
+          go build -o ../../build/google-play-apk-downloader
+          popd
+
+      # upload to "actions" tab artifacts (can only make a single .zip from a dir's files)
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: play
+          path: ${{github.workspace}}/build/google-play-apk-downloader
